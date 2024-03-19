@@ -3,7 +3,10 @@
  */
 import { store, getContext } from "@wordpress/interactivity";
 
-store("vs-reading-list", {
+const { state } = store("vs-reading-list", {
+  state: {
+    allBookmarks: [],
+  },
   actions: {
     toggle: () => {
       const context = getContext();
@@ -14,32 +17,38 @@ store("vs-reading-list", {
       allBookmarks = JSON.parse(allBookmarks);
 
       // Add or remove from our array of bookmarks.
-      if (context.isBookmarked) {
+      if (context.isBookmarked && !allBookmarks.includes(context.postId)) {
         allBookmarks.push(context.postId);
-      } else {
+      } else if (
+        !context.isBookmarked &&
+        allBookmarks.includes(context.postId)
+      ) {
         const index = allBookmarks.indexOf(context.postId);
         allBookmarks.splice(index, 1);
       }
 
       // Save the updated array of bookmarks to local storage.
       localStorage.setItem("vs-reading-list", JSON.stringify(allBookmarks));
+      state.allBookmarks = allBookmarks;
     },
   },
   callbacks: {
     logIsBookmarked: () => {
-      const { isBookmarked, postId } = getContext();
+      const { isBookmarked, postId, allBookmarks } = getContext();
       // Log the value of `isBookmarked` each time it changes.
       console.log(`${postId} is bookmarked: ${isBookmarked}`);
     },
     init: () => {
-      const { postId } = getContext();
+      const context = getContext();
 
       // Get all bookmarks from local storage or an empty array.
-      let allBookmarks = localStorage.getItem("vs-reading-list") || "[]";
-      allBookmarks = JSON.parse(allBookmarks);
+      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
+      state.allBookmarks = JSON.parse(bookmarks);
+
+      console.log("init", state.allBookmarks);
 
       // Check if the post is already bookmarked and toggle.
-      if (allBookmarks.includes(postId)) {
+      if (context.postId && state.allBookmarks.includes(context.postId)) {
         store("vs-reading-list").actions.toggle();
       }
     },

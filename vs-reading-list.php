@@ -26,5 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function vs_reading_list_vs_reading_list_block_init() {
 	register_block_type_from_metadata( __DIR__ . '/build/bookmark' );
+	register_block_type_from_metadata( __DIR__ . '/build/reading-list' );
 }
 add_action( 'init', 'vs_reading_list_vs_reading_list_block_init' );

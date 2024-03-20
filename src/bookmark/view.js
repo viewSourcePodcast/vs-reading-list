@@ -52,5 +52,14 @@ const { state } = store("vs-reading-list", {
         store("vs-reading-list").actions.toggle();
       }
     },
+    initReadingList: () => {
+      const context = getContext();
+
+      // Get all bookmarks from local storage or an empty array.
+      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
+      state.allBookmarks = JSON.parse(bookmarks);
+
+      console.log("init", state.allBookmarks);
+    },
   },
 });

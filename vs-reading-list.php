@@ -25,6 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function vs_reading_list_vs_reading_list_block_init() {
+
+	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/bookmark/view.asset.php';
+
+	wp_register_script_module( '@vs-reading-list/bookmark', plugin_dir_url( __FILE__ ) . 'build/bookmark/view.js', $asset_file['dependencies'], array(), $asset_file['version'] );
+
 	register_block_type_from_metadata( __DIR__ . '/build/bookmark' );
 	register_block_type_from_metadata( __DIR__ . '/build/reading-list' );
 }

@@ -116,6 +116,14 @@ const {
       if (context.postId && state.allBookmarks.includes(context.postId)) {
         (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.toggle();
       }
+    },
+    initReadingList: () => {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+
+      // Get all bookmarks from local storage or an empty array.
+      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
+      state.allBookmarks = JSON.parse(bookmarks);
+      console.log("init", state.allBookmarks);
     }
   }
 });

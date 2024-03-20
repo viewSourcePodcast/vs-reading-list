@@ -98,8 +98,7 @@ const {
     logIsBookmarked: () => {
       const {
         isBookmarked,
-        postId,
-        allBookmarks
+        postId
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       // Log the value of `isBookmarked` each time it changes.
       console.log(`${postId} is bookmarked: ${isBookmarked}`);
@@ -118,8 +117,6 @@ const {
       }
     },
     initReadingList: () => {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-
       // Get all bookmarks from local storage or an empty array.
       let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
       state.allBookmarks = JSON.parse(bookmarks);

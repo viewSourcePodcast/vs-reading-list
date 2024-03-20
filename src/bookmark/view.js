@@ -34,7 +34,7 @@ const { state } = store("vs-reading-list", {
   },
   callbacks: {
     logIsBookmarked: () => {
-      const { isBookmarked, postId, allBookmarks } = getContext();
+      const { isBookmarked, postId } = getContext();
       // Log the value of `isBookmarked` each time it changes.
       console.log(`${postId} is bookmarked: ${isBookmarked}`);
     },
@@ -53,8 +53,6 @@ const { state } = store("vs-reading-list", {
       }
     },
     initReadingList: () => {
-      const context = getContext();
-
       // Get all bookmarks from local storage or an empty array.
       let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
       state.allBookmarks = JSON.parse(bookmarks);

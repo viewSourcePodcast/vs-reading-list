@@ -33,11 +33,6 @@ const { state } = store("vs-reading-list", {
     },
   },
   callbacks: {
-    logIsBookmarked: () => {
-      const { isBookmarked, postId } = getContext();
-      // Log the value of `isBookmarked` each time it changes.
-      console.log(`${postId} is bookmarked: ${isBookmarked}`);
-    },
     init: () => {
       const context = getContext();
 

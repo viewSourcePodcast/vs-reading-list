@@ -18,7 +18,6 @@ $unique_id = wp_unique_id( 'p-' );
 	<?php echo get_block_wrapper_attributes(); ?>
 	data-wp-interactive="vs-reading-list"
 	data-wp-context='{ "isBookmarked": false, "postId": <?php echo esc_attr( get_the_ID() ); ?> }'
-	data-wp-watch="callbacks.logIsBookmarked"
 	data-wp-init="callbacks.init"
 >
 	<button

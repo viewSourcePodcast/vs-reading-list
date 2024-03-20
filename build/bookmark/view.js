@@ -95,14 +95,6 @@ const {
     }
   },
   callbacks: {
-    logIsBookmarked: () => {
-      const {
-        isBookmarked,
-        postId
-      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      // Log the value of `isBookmarked` each time it changes.
-      console.log(`${postId} is bookmarked: ${isBookmarked}`);
-    },
     init: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
 

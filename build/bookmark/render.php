@@ -10,14 +10,24 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-// Generate unique id for aria-controls.
-$unique_id = wp_unique_id( 'p-' );
+$total_bookmarks = get_post_meta( get_the_ID(), 'vs_reading_list_bookmarks', true );
+if ( ! $total_bookmarks ) {
+	$total_bookmarks = 0;
+}
+
+$my_context = array(
+	'isBookmarked'   => false,
+	'postId'         => get_the_ID(),
+	'totalBookmarks' => $total_bookmarks,
+);
+
+
 ?>
 
 <div
 	<?php echo get_block_wrapper_attributes(); ?>
 	data-wp-interactive="vs-reading-list"
-	data-wp-context='{ "isBookmarked": false, "postId": <?php echo esc_attr( get_the_ID() ); ?> }'
+	<?php echo wp_interactivity_data_wp_context( $my_context ); ?>
 	data-wp-init="callbacks.init"
 >
 	<button
@@ -30,4 +40,6 @@ $unique_id = wp_unique_id( 'p-' );
 			<?php esc_html_e( 'Bookmarked!', 'vs-reading-list' ); ?>
 		</span>
 	</button>
+
+	<span data-wp-text="context.totalBookmarks"></span>
 </div>

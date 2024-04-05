@@ -51,9 +51,9 @@ function Edit({
   setAttributes
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     ...blockProps
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Reading List – hello from the editor!', 'reading-list'));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Reading List – hello from the editor!", "reading-list")));
 }
 
 /***/ }),

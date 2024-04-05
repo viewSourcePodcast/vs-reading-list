@@ -22,4 +22,7 @@
 			<a data-wp-text="context.bookmark"></a>
 		</li>
 	</template>
+	<li data-wp-bind--hidden="state.allBookmarks">
+		<?php esc_html_e( 'Add your first bookmark!', 'wpdev' ); ?>
+	</li>
 </ul>

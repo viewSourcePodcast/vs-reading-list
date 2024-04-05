@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from "@wordpress/block-editor";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -25,12 +25,12 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
-	const blockProps = useBlockProps();
-	
-	return (
-		<p { ...blockProps }>
-			{ __( 'Reading List – hello from the editor!', 'reading-list' ) }
-		</p>
-	);
+export default function Edit({ attributes, setAttributes }) {
+  const blockProps = useBlockProps();
+
+  return (
+    <ul {...blockProps}>
+      <li>{__("Reading List – hello from the editor!", "reading-list")}</li>
+    </ul>
+  );
 }

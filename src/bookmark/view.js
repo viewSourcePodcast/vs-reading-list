@@ -8,23 +8,49 @@ const { state } = store("vs-reading-list", {
     allBookmarks: [],
   },
   actions: {
+    // Get all bookmarks from local storage or an empty array.
+    setState: () => {
+      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
+      state.allBookmarks = JSON.parse(bookmarks);
+    },
+
+    // Toggle the bookmarked state.
     toggle: () => {
       const context = getContext();
-      context.isBookmarked = !context.isBookmarked;
+
+      // Get the bookmark object from the context or the context itself.
+      let bookmark = context.bookmark ? context.bookmark : context;
 
       // Get all bookmarks from local storage or an empty array.
-      let allBookmarks = localStorage.getItem("vs-reading-list") || "[]";
-      allBookmarks = JSON.parse(allBookmarks);
+      let allBookmarks = state.allBookmarks;
 
-      // Add or remove from our array of bookmarks.
-      if (context.isBookmarked && !allBookmarks.includes(context.postId)) {
-        allBookmarks.push(context.postId);
-      } else if (
-        !context.isBookmarked &&
-        allBookmarks.includes(context.postId)
+      console.log(bookmark, "toggle 1");
+
+      // Toggle the bookmarked state.
+      bookmark = {
+        ...bookmark,
+        isBookmarked: !bookmark.isBookmarked,
+      };
+
+      console.log(bookmark, "toggle 2");
+
+      // Add or remove from our array of bookmarks in state.
+      if (
+        bookmark.isBookmarked &&
+        !allBookmarks.some(
+          (bookmarkItem) => bookmarkItem.postId === bookmark.postId
+        )
       ) {
-        const index = allBookmarks.indexOf(context.postId);
-        allBookmarks.splice(index, 1);
+        allBookmarks.push(bookmark);
+      } else if (
+        !bookmark.isBookmarked &&
+        allBookmarks.some(
+          (bookmarkItem) => bookmarkItem.postId === bookmark.postId
+        )
+      ) {
+        allBookmarks = allBookmarks.filter(
+          (bookmarkItem) => bookmarkItem.postId !== bookmark.postId
+        );
       }
 
       // Save the updated array of bookmarks to local storage.
@@ -33,26 +59,45 @@ const { state } = store("vs-reading-list", {
     },
   },
   callbacks: {
+    // Runs when an individual post is loaded.
     init: () => {
       const context = getContext();
 
-      // Get all bookmarks from local storage or an empty array.
-      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
-      state.allBookmarks = JSON.parse(bookmarks);
-
-      console.log("init", state.allBookmarks);
+      store("vs-reading-list").actions.setState();
 
       // Check if the post is already bookmarked and toggle.
-      if (context.postId && state.allBookmarks.includes(context.postId)) {
-        store("vs-reading-list").actions.toggle();
+      if (
+        context.postId &&
+        state.allBookmarks.some(
+          (bookmarkItem) => bookmarkItem.postId === context.postId
+        )
+      ) {
+        context.isBookmarked = true;
+      } else {
+        context.isBookmarked = false;
       }
     },
-    initReadingList: () => {
-      // Get all bookmarks from local storage or an empty array.
-      let bookmarks = localStorage.getItem("vs-reading-list") || "[]";
-      state.allBookmarks = JSON.parse(bookmarks);
 
-      console.log("init", state.allBookmarks);
+    // Runs on individual posts when the state changes.
+    watch: () => {
+      const context = getContext();
+
+      // Check if the post is already bookmarked and toggle.
+      if (
+        context.postId &&
+        state.allBookmarks.some(
+          (bookmarkItem) => bookmarkItem.postId === context.postId
+        )
+      ) {
+        context.isBookmarked = true;
+      } else {
+        context.isBookmarked = false;
+      }
+    },
+
+    // Runs when the reading list is loaded.
+    initReadingList: () => {
+      store("vs-reading-list").actions.setState();
     },
   },
 });

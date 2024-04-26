@@ -14,6 +14,8 @@
 $my_context = array(
 	'isBookmarked' => false,
 	'postId'       => get_the_ID(),
+	'postTitle'    => get_the_title(),
+	'postUrl'      => get_the_permalink(),
 );
 
 
@@ -24,9 +26,11 @@ $my_context = array(
 	data-wp-interactive="vs-reading-list"
 	<?php echo wp_interactivity_data_wp_context( $my_context ); ?>
 	data-wp-init="callbacks.init"
+	data-wp-watch="callbacks.watch"
 >
 	<button
 		data-wp-on--click="actions.toggle"
+		class="wp-element-button"
 	>
 		<span data-wp-bind--hidden="context.isBookmarked">
 			<?php esc_html_e( 'Bookmark', 'vs-reading-list' ); ?>

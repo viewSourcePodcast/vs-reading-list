@@ -6,4 +6,12 @@
  */
 
 .wp-block-vs-reading-list-reading-list {
+	li {
+		p {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
 }

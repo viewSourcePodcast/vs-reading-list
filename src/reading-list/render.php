@@ -19,8 +19,10 @@
 >
 	<template data-wp-each--bookmark="state.allBookmarks" >
 		<li>
-			<a data-wp-text="context.bookmark.postTitle" data-wp-bind--href="context.bookmark.postUrl"></a>
-			<button data-wp-on--click="actions.toggle"><?php esc_html_e( 'Remove', 'vs-reading-list' ); ?></button>
+			<p>
+				<a data-wp-text="context.bookmark.postTitle" data-wp-bind--href="context.bookmark.postUrl"></a>
+				<button data-wp-on--click="actions.toggle" class="wp-element-button"><?php esc_html_e( 'Remove', 'vs-reading-list' ); ?></button>
+			</p>
 		</li>
 	</template>
 	<li data-wp-bind--hidden="state.allBookmarks.length">

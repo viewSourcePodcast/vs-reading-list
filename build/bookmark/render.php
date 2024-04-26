@@ -30,6 +30,7 @@ $my_context = array(
 >
 	<button
 		data-wp-on--click="actions.toggle"
+		class="wp-element-button"
 	>
 		<span data-wp-bind--hidden="context.isBookmarked">
 			<?php esc_html_e( 'Bookmark', 'vs-reading-list' ); ?>

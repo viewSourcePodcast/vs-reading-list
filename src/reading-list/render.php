@@ -19,10 +19,11 @@
 >
 	<template data-wp-each--bookmark="state.allBookmarks" >
 		<li>
-			<a data-wp-text="context.bookmark"></a>
+			<a data-wp-text="context.bookmark.postTitle" data-wp-bind--href="context.bookmark.postUrl"></a>
+			<button data-wp-on--click="actions.toggle"><?php esc_html_e( 'Remove', 'vs-reading-list' ); ?></button>
 		</li>
 	</template>
-	<li data-wp-bind--hidden="state.allBookmarks">
-		<?php esc_html_e( 'Add your first bookmark!', 'wpdev' ); ?>
+	<li data-wp-bind--hidden="state.allBookmarks.length">
+		<?php esc_html_e( 'Add your first bookmark!', 'vs-reading-list' ); ?>
 	</li>
 </ul>

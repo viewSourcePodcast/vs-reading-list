@@ -86,19 +86,19 @@ const {
       let bookmark = context.bookmark ? context.bookmark : context;
 
       // Get all bookmarks from local storage or an empty array.
-      let allBookmarks = state.allBookmarks;
+      let allBookmarks = [...state.allBookmarks];
 
-      // Toggle the bookmarked state.
-      bookmark = {
-        ...bookmark,
-        isBookmarked: !bookmark.isBookmarked
-      };
-
-      // Add or remove from our array of bookmarks in state.
-      if (bookmark.isBookmarked && !allBookmarks.some(bookmarkItem => bookmarkItem.postId === bookmark.postId)) {
-        allBookmarks.push(bookmark);
-      } else if (!bookmark.isBookmarked && allBookmarks.some(bookmarkItem => bookmarkItem.postId === bookmark.postId)) {
+      // Check if the bookmark belongs in the array of bookmarks.
+      if (bookmark.isBookmarked) {
         allBookmarks = allBookmarks.filter(bookmarkItem => bookmarkItem.postId !== bookmark.postId);
+      } else if (allBookmarks.indexOf(bookmark) === -1) {
+        // Toggle the bookmarked state.
+        bookmark = {
+          ...bookmark,
+          isBookmarked: !bookmark.isBookmarked
+        };
+        // Add to our array of bookmarks in state.
+        allBookmarks.push(bookmark);
       }
 
       // Save the updated array of bookmarks to local storage.

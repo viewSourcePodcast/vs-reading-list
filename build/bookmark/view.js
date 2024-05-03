@@ -87,14 +87,12 @@ const {
 
       // Get all bookmarks from local storage or an empty array.
       let allBookmarks = state.allBookmarks;
-      console.log(bookmark, "toggle 1");
 
       // Toggle the bookmarked state.
       bookmark = {
         ...bookmark,
         isBookmarked: !bookmark.isBookmarked
       };
-      console.log(bookmark, "toggle 2");
 
       // Add or remove from our array of bookmarks in state.
       if (bookmark.isBookmarked && !allBookmarks.some(bookmarkItem => bookmarkItem.postId === bookmark.postId)) {
@@ -109,8 +107,12 @@ const {
     }
   },
   callbacks: {
-    // Runs when an individual post is loaded.
-    init: () => {
+    // Runs when the reading list block is loaded.
+    initReadingList: () => {
+      (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
+    },
+    // Runs when a bookmark block is loaded.
+    initBookmark: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
 
@@ -121,7 +123,7 @@ const {
         context.isBookmarked = false;
       }
     },
-    // Runs on individual posts when the state changes.
+    // Runs on individual bookmarks when the state changes.
     watch: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
 
@@ -131,10 +133,6 @@ const {
       } else {
         context.isBookmarked = false;
       }
-    },
-    // Runs when the reading list is loaded.
-    initReadingList: () => {
-      (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
     }
   }
 });

@@ -24,15 +24,11 @@ const { state } = store("vs-reading-list", {
       // Get all bookmarks from local storage or an empty array.
       let allBookmarks = state.allBookmarks;
 
-      console.log(bookmark, "toggle 1");
-
       // Toggle the bookmarked state.
       bookmark = {
         ...bookmark,
         isBookmarked: !bookmark.isBookmarked,
       };
-
-      console.log(bookmark, "toggle 2");
 
       // Add or remove from our array of bookmarks in state.
       if (
@@ -59,8 +55,13 @@ const { state } = store("vs-reading-list", {
     },
   },
   callbacks: {
-    // Runs when an individual post is loaded.
-    init: () => {
+    // Runs when the reading list block is loaded.
+    initReadingList: () => {
+      store("vs-reading-list").actions.setState();
+    },
+
+    // Runs when a bookmark block is loaded.
+    initBookmark: () => {
       const context = getContext();
 
       store("vs-reading-list").actions.setState();
@@ -78,7 +79,7 @@ const { state } = store("vs-reading-list", {
       }
     },
 
-    // Runs on individual posts when the state changes.
+    // Runs on individual bookmarks when the state changes.
     watch: () => {
       const context = getContext();
 
@@ -93,11 +94,6 @@ const { state } = store("vs-reading-list", {
       } else {
         context.isBookmarked = false;
       }
-    },
-
-    // Runs when the reading list is loaded.
-    initReadingList: () => {
-      store("vs-reading-list").actions.setState();
     },
   },
 });

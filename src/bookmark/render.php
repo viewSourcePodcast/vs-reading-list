@@ -25,7 +25,7 @@ $my_context = array(
 	<?php echo get_block_wrapper_attributes(); ?>
 	data-wp-interactive="vs-reading-list"
 	<?php echo wp_interactivity_data_wp_context( $my_context ); ?>
-	data-wp-init="callbacks.init"
+	data-wp-init="callbacks.initBookmark"
 	data-wp-watch="callbacks.watch"
 >
 	<button

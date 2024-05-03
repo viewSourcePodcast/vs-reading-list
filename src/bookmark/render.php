@@ -13,9 +13,11 @@
 
 $my_context = array(
 	'isBookmarked' => false,
-	'postId'       => get_the_ID(),
-	'postTitle'    => get_the_title(),
-	'postUrl'      => get_the_permalink(),
+	'bookmark'     => array(
+		'postId'    => get_the_ID(),
+		'postTitle' => get_the_title(),
+		'postUrl'   => get_the_permalink(),
+	),
 );
 
 

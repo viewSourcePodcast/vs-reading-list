@@ -83,7 +83,7 @@ const {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
 
       // Get the bookmark object from the context or the context itself.
-      let bookmark = context.bookmark ? context.bookmark : context;
+      let bookmark = context.bookmark;
 
       // Get all bookmarks from local storage or an empty array.
       let allBookmarks = [...state.allBookmarks];
@@ -117,7 +117,7 @@ const {
       (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
 
       // Check if the post is already bookmarked and toggle.
-      if (context.postId && state.allBookmarks.some(bookmarkItem => bookmarkItem.postId === context.postId)) {
+      if (context.bookmark.postId && state.allBookmarks.some(bookmarkItem => bookmarkItem.postId === context.bookmark.postId)) {
         context.isBookmarked = true;
       } else {
         context.isBookmarked = false;
@@ -128,7 +128,7 @@ const {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
 
       // Check if the post is already bookmarked and toggle.
-      if (context.postId && state.allBookmarks.some(bookmarkItem => bookmarkItem.postId === context.postId)) {
+      if (context.bookmark.postId && state.allBookmarks.some(bookmarkItem => bookmarkItem.postId === context.bookmark.postId)) {
         context.isBookmarked = true;
       } else {
         context.isBookmarked = false;

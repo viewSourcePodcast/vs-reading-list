@@ -19,7 +19,7 @@ const { state } = store("vs-reading-list", {
       const context = getContext();
 
       // Get the bookmark object from the context or the context itself.
-      let bookmark = context.bookmark ? context.bookmark : context;
+      let bookmark = context.bookmark;
 
       // Get all bookmarks from local storage or an empty array.
       let allBookmarks = [...state.allBookmarks];
@@ -58,9 +58,9 @@ const { state } = store("vs-reading-list", {
 
       // Check if the post is already bookmarked and toggle.
       if (
-        context.postId &&
+        context.bookmark.postId &&
         state.allBookmarks.some(
-          (bookmarkItem) => bookmarkItem.postId === context.postId
+          (bookmarkItem) => bookmarkItem.postId === context.bookmark.postId
         )
       ) {
         context.isBookmarked = true;
@@ -75,9 +75,9 @@ const { state } = store("vs-reading-list", {
 
       // Check if the post is already bookmarked and toggle.
       if (
-        context.postId &&
+        context.bookmark.postId &&
         state.allBookmarks.some(
-          (bookmarkItem) => bookmarkItem.postId === context.postId
+          (bookmarkItem) => bookmarkItem.postId === context.bookmark.postId
         )
       ) {
         context.isBookmarked = true;

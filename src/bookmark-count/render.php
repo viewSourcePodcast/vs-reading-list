@@ -21,6 +21,7 @@ $my_context = array(
 	data-wp-interactive="vs-reading-list"
 	<?php echo wp_interactivity_data_wp_context( $my_context ); ?>
 	data-wp-init="callbacks.initBookmarkCount"
+	
 >
 	<span data-wp-text="context.count"></span>
 </div>

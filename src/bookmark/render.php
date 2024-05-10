@@ -13,6 +13,7 @@
 
 $my_context = array(
 	'isBookmarked' => false,
+	'nonce'        => wp_create_nonce( 'wp_rest' ),
 	'bookmark'     => array(
 		'postId'    => get_the_ID(),
 		'postTitle' => get_the_title(),

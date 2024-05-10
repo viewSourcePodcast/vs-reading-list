@@ -89,9 +89,9 @@ const {
       let allBookmarks = [...state.allBookmarks];
 
       // Check if the bookmark belongs in the array of bookmarks.
-      if (bookmark.isBookmarked) {
+      if (allBookmarks.some(bookmarkItem => bookmarkItem.postId === bookmark.postId)) {
         allBookmarks = allBookmarks.filter(bookmarkItem => bookmarkItem.postId !== bookmark.postId);
-      } else if (allBookmarks.indexOf(bookmark) === -1) {
+      } else {
         // Toggle the bookmarked state.
         bookmark = {
           ...bookmark,
@@ -99,6 +99,16 @@ const {
         };
         // Add to our array of bookmarks in state.
         allBookmarks.push(bookmark);
+        if (context.nonce) {
+          // Update the bookmark count.
+          fetch(`/wp-json/vs-reading-list/v1/bookmark/${bookmark.postId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-WP-Nonce": context.nonce
+            }
+          });
+        }
       }
 
       // Save the updated array of bookmarks to local storage.
@@ -108,11 +118,13 @@ const {
   },
   callbacks: {
     // Runs when the reading list block is loaded.
-    initReadingList: () => {},
+    initReadingList: () => {
+      (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
+    },
     // Runs when a bookmark block is loaded.
     initBookmark: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-
+      (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
       // Check if the post is already bookmarked and toggle.
       if (context.bookmark.postId && state.allBookmarks.some(bookmarkItem => bookmarkItem.postId === context.bookmark.postId)) {
         context.isBookmarked = true;
@@ -120,7 +132,9 @@ const {
         context.isBookmarked = false;
       }
     },
-    initBookmarkCount: () => {},
+    initBookmarkCount: () => {
+      (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
+    },
     // Runs on individual bookmarks when the state changes.
     watch: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
@@ -132,13 +146,20 @@ const {
         context.isBookmarked = false;
       }
     }
+
+    // watchCount: (postId, count) => {
+    //   console.log("watchCount", postId, count);
+    //   const context = getContext();
+
+    //   if (context.bookmark.postId === postId) {
+    //     context.count = count;
+    //   }
+    // },
   }
 });
 
 // on document load, set the state of the reading list.
-document.addEventListener("DOMContentLoaded", () => {
-  (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
-});
+// document.addEventListener("DOMContentLoaded", () => {});
 })();
 
 

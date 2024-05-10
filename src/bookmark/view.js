@@ -25,11 +25,15 @@ const { state } = store("vs-reading-list", {
       let allBookmarks = [...state.allBookmarks];
 
       // Check if the bookmark belongs in the array of bookmarks.
-      if (bookmark.isBookmarked) {
+      if (
+        allBookmarks.some(
+          (bookmarkItem) => bookmarkItem.postId === bookmark.postId
+        )
+      ) {
         allBookmarks = allBookmarks.filter(
           (bookmarkItem) => bookmarkItem.postId !== bookmark.postId
         );
-      } else if (allBookmarks.indexOf(bookmark) === -1) {
+      } else {
         // Toggle the bookmarked state.
         bookmark = {
           ...bookmark,
@@ -37,6 +41,17 @@ const { state } = store("vs-reading-list", {
         };
         // Add to our array of bookmarks in state.
         allBookmarks.push(bookmark);
+
+        if (context.nonce) {
+          // Update the bookmark count.
+          fetch(`/wp-json/vs-reading-list/v1/bookmark/${bookmark.postId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-WP-Nonce": context.nonce,
+            },
+          });
+        }
       }
 
       // Save the updated array of bookmarks to local storage.
@@ -46,12 +61,15 @@ const { state } = store("vs-reading-list", {
   },
   callbacks: {
     // Runs when the reading list block is loaded.
-    initReadingList: () => {},
+    initReadingList: () => {
+      store("vs-reading-list").actions.setState();
+    },
 
     // Runs when a bookmark block is loaded.
     initBookmark: () => {
       const context = getContext();
 
+      store("vs-reading-list").actions.setState();
       // Check if the post is already bookmarked and toggle.
       if (
         context.bookmark.postId &&
@@ -65,7 +83,9 @@ const { state } = store("vs-reading-list", {
       }
     },
 
-    initBookmarkCount: () => {},
+    initBookmarkCount: () => {
+      store("vs-reading-list").actions.setState();
+    },
 
     // Runs on individual bookmarks when the state changes.
     watch: () => {
@@ -83,10 +103,17 @@ const { state } = store("vs-reading-list", {
         context.isBookmarked = false;
       }
     },
+
+    // watchCount: (postId, count) => {
+    //   console.log("watchCount", postId, count);
+    //   const context = getContext();
+
+    //   if (context.bookmark.postId === postId) {
+    //     context.count = count;
+    //   }
+    // },
   },
 });
 
 // on document load, set the state of the reading list.
-document.addEventListener("DOMContentLoaded", () => {
-  store("vs-reading-list").actions.setState();
-});
+// document.addEventListener("DOMContentLoaded", () => {});

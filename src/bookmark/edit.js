@@ -30,7 +30,9 @@ export default function Edit({ attributes, setAttributes }) {
 
   return (
     <div {...blockProps}>
-      <button>{__("Bookmark", "vs-reading-list")}</button>
+      <button className="wp-element-button">
+        {__("Bookmark", "vs-reading-list")}
+      </button>
     </div>
   );
 }

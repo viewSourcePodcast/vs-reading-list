@@ -145,21 +145,10 @@ const {
       } else {
         context.isBookmarked = false;
       }
-    }
-
-    // watchCount: (postId, count) => {
-    //   console.log("watchCount", postId, count);
-    //   const context = getContext();
-
-    //   if (context.bookmark.postId === postId) {
-    //     context.count = count;
-    //   }
-    // },
+    },
+    watchCount: (postId, count) => {}
   }
 });
-
-// on document load, set the state of the reading list.
-// document.addEventListener("DOMContentLoaded", () => {});
 })();
 
 

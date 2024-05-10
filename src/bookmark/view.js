@@ -86,7 +86,7 @@ const { state } = store("vs-reading-list", {
   },
 });
 
-// on window load, set the state of the reading list.
-window.onload = () => {
+// on document load, set the state of the reading list.
+document.addEventListener("DOMContentLoaded", () => {
   store("vs-reading-list").actions.setState();
-};
+});

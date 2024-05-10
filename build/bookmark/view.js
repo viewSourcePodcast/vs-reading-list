@@ -135,10 +135,10 @@ const {
   }
 });
 
-// on window load, set the state of the reading list.
-window.onload = () => {
+// on document load, set the state of the reading list.
+document.addEventListener("DOMContentLoaded", () => {
   (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("vs-reading-list").actions.setState();
-};
+});
 })();
 
 

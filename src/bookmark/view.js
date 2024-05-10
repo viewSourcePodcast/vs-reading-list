@@ -46,15 +46,11 @@ const { state } = store("vs-reading-list", {
   },
   callbacks: {
     // Runs when the reading list block is loaded.
-    initReadingList: () => {
-      store("vs-reading-list").actions.setState();
-    },
+    initReadingList: () => {},
 
     // Runs when a bookmark block is loaded.
     initBookmark: () => {
       const context = getContext();
-
-      store("vs-reading-list").actions.setState();
 
       // Check if the post is already bookmarked and toggle.
       if (
@@ -68,6 +64,8 @@ const { state } = store("vs-reading-list", {
         context.isBookmarked = false;
       }
     },
+
+    initBookmarkCount: () => {},
 
     // Runs on individual bookmarks when the state changes.
     watch: () => {
@@ -87,3 +85,8 @@ const { state } = store("vs-reading-list", {
     },
   },
 });
+
+// on window load, set the state of the reading list.
+window.onload = () => {
+  store("vs-reading-list").actions.setState();
+};
